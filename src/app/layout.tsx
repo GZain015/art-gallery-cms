@@ -6,9 +6,9 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Our Baby Hospital",
+  title: "Art Gallery",
   description:
-    "Our Baby Hospital - Consult your doctors.",
+    "Art Gallery - Visit us to see master peice.",
 };
 
 export default function RootLayout({
