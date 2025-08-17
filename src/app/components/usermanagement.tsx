@@ -412,6 +412,206 @@ function UserManagement() {
         </div>
       </div>
 
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div
+            className="bg-white rounded-lg p-4 md:p-6 w-full max-w-md sm:max-w-lg mx-4"
+            style={{ maxHeight: "90vh", overflowY: "auto" }}
+          >
+            <h2 className="text-xl font-semibold mb-4">
+              {isEditMode ? "Edit User" : "Add New User"}
+            </h2>
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleValidation();
+              }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-black font-medium mb-1">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Name"
+                    className={`w-full border ${
+                      errors.name ? "border-red-500" : "border-gray-300"
+                    } p-2 rounded-lg`}
+                  />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm">{errors.name}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-black font-medium mb-1">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    className={`w-full border ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    } p-2 rounded-lg`}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email}</p>
+                  )}
+                </div>
+              </div>
+
+              {!isEditMode && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-black font-medium mb-1">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="•••••••••••••"
+                        className={`w-full border ${
+                          errors.password ? "border-red-500" : "border-gray-300"
+                        } p-2 rounded-lg`}
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-600 hover:text-blue-500 transition duration-200"
+                      >
+                        <EyeIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                    {errors.password && (
+                      <p className="text-red-500 text-sm">{errors.password}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-black font-medium mb-1">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showCPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        placeholder="•••••••••••••"
+                        className={`w-full border ${
+                          errors.confirmPassword
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } p-2 rounded-lg`}
+                      />
+                      <button
+                        type="button"
+                        onClick={toggleCPasswordVisibility}
+                        className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-600 hover:text-blue-500 transition duration-200"
+                      >
+                        <EyeIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 text-sm">
+                        {errors.confirmPassword}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                  <label className="block text-black font-medium mb-1">
+                    Phone
+                  </label>
+                  <PhoneInput
+                    country={"au"}
+                    value={formData.phone} 
+                    onChange={(phone) =>
+                      handleChange({
+                        target: { name: "phone", value: phone },
+                      })
+                    } 
+                    inputStyle={{
+                      width: "100%",
+                      height: "40px", 
+                      padding: "8px 8px 8px 48px", 
+                      border: `1px solid ${
+                        errors.phone ? "red" : "#ccc" 
+                      }`,
+                      borderRadius: "8px", 
+                      color: "#000", 
+                      fontSize: "14px", 
+                      backgroundColor: "#fff", 
+                    }}
+                    containerStyle={{
+                      width: "100%", 
+                    }}
+                    dropdownStyle={{
+                      color: "#000", 
+                    }}
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">{errors.phone}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* <div>
+                <label className="block text-black font-medium mb-1">
+                  Role
+                </label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className={`w-full border ${
+                    errors.role ? "border-red-500" : "border-gray-300"
+                  } p-2 rounded-lg`}
+                >
+                  <option value="" selected disabled hidden>
+                    Select Role
+                  </option>
+                  <option value="Admin">Admin</option>
+                </select>
+                {errors.role && (
+                  <p className="text-red-500 text-sm">{errors.role}</p>
+                )}
+              </div> */}
+
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600"
+                >
+                  Save
+                </button>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                  onClick={handleModalClose}
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
