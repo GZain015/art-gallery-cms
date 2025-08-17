@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f3f4f6;
+  --foreground: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f3f4f6;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+#__next {
+  width: 100%;
+  height: 100%; /* Change this */
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow: auto;
+}
+
+
+
+html {
+  overflow: hidden;
+}
+
+
+.main-content {
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Allow scrolling only for main content */
+}
+
+
+
+/* Add this to your global CSS */
+.PieChart svg:focus,
+.PieChart .recharts-pie-sector:focus {
+  outline: none;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.modal {
+  margin-left: 0 !important;
+}
+
+
+.modal-backdrop {
+  backdrop-filter: blur(2px); /* Adjust blur intensity */
+  background-color: rgba(0, 0, 0, 0.1); /* Matches Tailwind's bg-opacity-10 */
+}
