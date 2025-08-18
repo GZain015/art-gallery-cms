@@ -199,6 +199,31 @@ function UserManagement() {
     setIsModalOpen(true);
   };
 
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+      | { target: { name: string; value: string } }
+  ) => {
+    const { name, value } = e.target;
+
+    // Reset the error for the specific field
+    if (errors[name]) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "", 
+      }));
+    }
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setErrors({});
+  };
+
+
   return (
     <div className="p-8 w-full bg-gray-100 text-gray-800">
       {/* Loader */}

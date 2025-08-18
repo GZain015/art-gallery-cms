@@ -118,8 +118,8 @@ function ProductManagement() {
         setTotalDoctors(response.data.total);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        console.error("Error fetching doctors:", error);
-        toast.error("Failed to load doctors");
+        console.error("Error fetching products:", error);
+        toast.error("Failed to load products");
       } finally {
         setLoading(false);
       }
@@ -283,7 +283,7 @@ function ProductManagement() {
             },
           }
         );
-        toast.success("Doctor updated successfully!");
+        toast.success("Product updated successfully!");
       } else {
         response = await axios.post(
           `${process.env.NEXT_PUBLIC_HOST}/doctor`,
@@ -295,7 +295,7 @@ function ProductManagement() {
             },
           }
         );
-        toast.success("Doctor added successfully!");
+        toast.success("Product added successfully!");
       }
 
       // Refresh doctors list
@@ -324,7 +324,7 @@ function ProductManagement() {
           toast.error(errorMessage);
         }
       } else {
-        toast.error("Failed to save doctor");
+        toast.error("Failed to save product");
       }
     } finally {
       setLoading(false);
@@ -366,8 +366,8 @@ function ProductManagement() {
       setCurrentPage(1);
 
     } catch (error) {
-      console.error("Error deleting doctor:", error);
-      toast.error("Failed to delete doctor");
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product");
     } finally {
       setLoading(false);
       closeDeleteModal();
@@ -559,9 +559,6 @@ function ProductManagement() {
               <th className="p-4">Phone</th>
               <th className="p-4">Specialization</th>
               <th className="p-4">Status</th>
-              {/* <th className="p-4">Checkup Time</th> */}
-              {/* <th className="p-4">Availability</th> */}
-              {/* <th className="p-4">Fees (PKR)</th> */}
               <th className="p-4">Actions</th>
 
             </tr>
