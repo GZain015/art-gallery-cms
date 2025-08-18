@@ -72,14 +72,14 @@ function Sidebar({ isOpen, onToggle }) {
         </button>
       )}
       {/* Logo Section */}
-      <div className="flex items-center justify-center h-20 border-b border-gray-700">
-      <Image
+      {/* <div className="flex items-center justify-center h-20 border-b border-gray-700">
+        <Image
             src="/images/LogoSidebar1.png"
             alt="Dashboard Icon"
             width={150}
             height={150}
-          />
-      </div>
+        />
+      </div> */}
 
       {/* Navigation Items */}
       <nav className="flex flex-col flex-grow p-4 space-y-4">
