@@ -672,7 +672,7 @@ function AdminManagement() {
                     Phone
                   </label>
                   <PhoneInput
-                    country={"au"}
+                    country={"pk"}
                     value={formData.phone} 
                     onChange={(phone) =>
                       handleChange({
@@ -703,28 +703,6 @@ function AdminManagement() {
                   )}
                 </div>
               </div>
-
-              {/* <div>
-                <label className="block text-black font-medium mb-1">
-                  Role
-                </label>
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  className={`w-full border ${
-                    errors.role ? "border-red-500" : "border-gray-300"
-                  } p-2 rounded-lg`}
-                >
-                  <option value="" selected disabled hidden>
-                    Select Role
-                  </option>
-                  <option value="Admin">Admin</option>
-                </select>
-                {errors.role && (
-                  <p className="text-red-500 text-sm">{errors.role}</p>
-                )}
-              </div> */}
 
               <div className="flex justify-end space-x-4">
                 <button

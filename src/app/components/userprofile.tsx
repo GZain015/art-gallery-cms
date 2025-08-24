@@ -455,7 +455,7 @@ function Userprofile() {
             <div>
               <label className="block text-gray-700">Phone Number</label>
               <PhoneInput
-                country={"au"}
+                country={"pk"}
                 value={formData.phone} 
                 onChange={(phone) =>
                   handleChange({
