@@ -97,38 +97,6 @@ function Sidebar({ isOpen, onToggle }) {
           />
           <span className="text-base md:text-sm">Dashboard</span>
         </a>
-        {/* <a
-          href="/appointmentManagement"
-          className={`flex items-center space-x-2 py-2 px-4 rounded-md ${
-            pathname === "/appointmentManagement"
-              ? "bg-blue-600"
-              : "hover:bg-gray-700"
-          }`}
-        >
-          <Image
-            src="/images/Appointment_Logo1.svg"
-            alt="Appointment Management Icon"
-            width={20}
-            height={20}
-          />
-          <span className="text-base md:text-sm">Appointments</span>
-        </a>
-        <a
-          href="/doctorManagement"
-          className={`flex items-center space-x-2 py-2 px-4 rounded-md ${
-            pathname === "/doctorManagement"
-              ? "bg-blue-600"
-              : "hover:bg-gray-700"
-          }`}
-        >
-          <Image
-            src="/images/doctor_logo1.png"
-            alt="Doctor Management Icon"
-            width={20}
-            height={20}
-          />
-          <span className="text-base md:text-sm">Doctor Management</span>
-        </a> */}
         <a
           href="/productManagement"
           className={`flex items-center space-x-2 py-2 px-4 rounded-md ${
@@ -138,7 +106,7 @@ function Sidebar({ isOpen, onToggle }) {
           }`}
         >
           <Image
-            src="/images/doctor_logo1.png"
+            src="/images/Product.svg"
             alt="Doctor Management Icon"
             width={20}
             height={20}
