@@ -564,7 +564,7 @@ function UserManagement() {
                     Phone
                   </label>
                   <PhoneInput
-                    country={"au"}
+                    country={"pk"}
                     value={formData.phone} 
                     onChange={(phone) =>
                       handleChange({
