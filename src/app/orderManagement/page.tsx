@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import ProductManagement from "../components/productManagement";
+import OrderManagement from "../components/orderManagement";
 import Sidebar from "../components/sidebar";
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function DashboardLayout() {
         <div className="pb-0">
           {" "}
           {/* Add padding at the bottom */}
-          <ProductManagement />
+          <OrderManagement />
         </div>
       </div>
     </div>

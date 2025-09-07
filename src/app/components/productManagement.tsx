@@ -457,7 +457,7 @@ function ProductManagement() {
 
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-        <h1 className="text-2xl font-semibold">Product Management (Art Gallery)</h1>
+        <h1 className="text-2xl font-semibold">Product Management</h1>
         <button
           className="bg-[#09243C] text-white px-6 py-3 rounded-lg mt-4 sm:mt-0"
           onClick={() => openModal()}
