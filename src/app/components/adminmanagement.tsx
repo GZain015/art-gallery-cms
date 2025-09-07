@@ -60,6 +60,7 @@ function AdminManagement() {
     password: "",
     confirmPassword: "",
     phone: "",
+    role: "admin",
   });
 
   const { token } = useAuth();
@@ -117,6 +118,7 @@ function AdminManagement() {
             ...user,
             password: "",
             confirmPassword: "",
+            role: user.role || "admin",
           }
         : {
             name: "",
@@ -124,6 +126,7 @@ function AdminManagement() {
             password: "",
             confirmPassword: "",
             phone: "",
+            role: "admin",
           }
     );
     setIsModalOpen(true);
@@ -182,6 +185,7 @@ function AdminManagement() {
       email: formData.email,
       password: formData.password || undefined,
       phone: formData.phone,
+      role: formData.role,
     };
 
     setLoading(true);
@@ -190,8 +194,8 @@ function AdminManagement() {
     try {
       if (isEditMode) {
         await axios.put(
-          // `${process.env.NEXT_PUBLIC_HOST}/admin/user/${id}`,
-          `${process.env.NEXT_PUBLIC_HOST}/admin/user/`,
+          `${process.env.NEXT_PUBLIC_HOST}/admin/user/${id}`,
+          // `${process.env.NEXT_PUBLIC_HOST}/admin/user/`,
           // formData,
           payload,
           {
@@ -229,6 +233,7 @@ function AdminManagement() {
         password: "",
         confirmPassword: "",
         phone: "",
+        role: "",
       });
     } catch (error: any) {
       console.error("Error adding/editing user:", error);
@@ -400,7 +405,7 @@ function AdminManagement() {
               <th className="p-4">User Name</th>
               <th className="p-4">Email</th>
               <th className="p-4">Phone</th>
-              {/* <th className="p-4">Role</th> */}
+              <th className="p-4">Role</th>
               <th className="p-4">Actions</th>
             </tr>
           </thead>
@@ -417,19 +422,19 @@ function AdminManagement() {
                 <td className="p-4">{user.name}</td>
                 <td className="p-4">{user.email}</td>
                 <td className="p-4">{user.phone}</td>
-                {/* <td className="p-4">
+                <td className="p-4">
                   <span className="inline-block px-3 py-1 bg-gray-200 text-sm rounded-lg">
-                    {user.role}
+                    {user.role === "artist" ? "Artist" : "Admin"}
                   </span>
-                </td> */}
+                </td>
                 <td className="p-4">
                   <div className="flex flex-wrap gap-2">
-                    {/* <button
+                    <button
                       className="bg-blue-500 text-white px-6 py-2 rounded-lg"
                       onClick={() => openModal(user)}
                     >
                       Edit
-                    </button> */}
+                    </button>
                     <button
                       className="bg-red-500 text-white px-4 py-2 rounded-lg"
                       onClick={() => openDeleteModal(user.id)}
@@ -667,7 +672,7 @@ function AdminManagement() {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+                <div>
                   <label className="block text-black font-medium mb-1">
                     Phone
                   </label>
@@ -702,6 +707,21 @@ function AdminManagement() {
                     <p className="text-red-500 text-sm">{errors.phone}</p>
                   )}
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-black font-medium mb-1">Role</label>
+                    <select
+                      name="role"
+                      value={formData.role}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 p-2 rounded-lg mb-2"
+                    >
+                      <option value="admin" className="border-gray-300 p-2 rounded-lg">Admin</option>
+                      <option value="artist" className="border-gray-300 p-2 rounded-lg">Artist</option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
 
               <div className="flex justify-end space-x-4">
