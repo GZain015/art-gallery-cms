@@ -14,7 +14,8 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const PriceRangeChart = () => {
   const data = {
-    labels: ["$50–100", "$100–200", "$200–300", "$300+"],
+    // labels: ["$50–100", "$100–200", "$200–300", "$300+"],
+    labels: ["Rs.50–100", "Rs.100–200", "Rs.200–300", "Rs.300+"],
     datasets: [
       {
         label: "Number of Artworks Sold",
