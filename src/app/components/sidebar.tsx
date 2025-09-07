@@ -115,6 +115,9 @@ function Sidebar({ isOpen, onToggle }) {
         </a>
        
         {/* {(role === "Admin" || role === "SuperAdmin") && ( */}
+        {/* {(role === "Admin" || isAdmin == true) && ( */}
+        {/* {(role === "Admin") && ( */}
+        {(role === "admin") && (
         <>
           <hr className="border-gray-700" />
           <a
@@ -150,7 +153,7 @@ function Sidebar({ isOpen, onToggle }) {
             <span className="text-base md:text-sm">Admin Management</span>
           </a>
         </>
-        {/* )} */}
+        )}
 
         <hr className="border-gray-700" />
         <a

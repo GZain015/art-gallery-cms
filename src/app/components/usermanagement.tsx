@@ -179,6 +179,7 @@ function UserManagement() {
   };
 
   const openModal = (user?: any) => {
+    console.error("user data: ", user)
     setIsEditMode(!!user);
     setId(user?.id || "");
     setFormData(
@@ -223,6 +224,118 @@ function UserManagement() {
     setErrors({});
   };
 
+  const handleValidation = () => {
+    const newErrors: FormErrors = {};
+
+    // Validate required fields
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Valid email is required.";
+
+    if (!isEditMode) {
+      if (!formData.password.trim())
+        newErrors.password = "Password is required.";
+      if (formData.password.trim() !== formData.confirmPassword.trim())
+        newErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required.";
+    } else if (!/^\d{6,}$/.test(formData.phone)) {
+      newErrors.phone = "Phone number must be at least 10 digits.";
+    }
+    setErrors(newErrors);
+
+    // Check if there are no errors
+    if (Object.keys(newErrors).length === 0) {
+      handleSubmit();
+    }
+  };
+
+    const handleSubmit = async () => {
+    // console.log("handle Submit");
+
+    if (!token) {
+      console.error("No token available while submitting");
+      return;
+    }
+
+    if (!isEditMode && formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password || undefined,
+      phone: formData.phone,
+    };
+
+    const payload1 = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+    };
+
+    setLoading(true);
+
+    console.log(payload);
+    console.log("userId: ", id)
+    try {
+      if (isEditMode) {
+        await axios.put(
+          `${process.env.NEXT_PUBLIC_HOST}/admin/user/update/${id}`,
+          // formData,
+          // payload,
+          payload1,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        toast.success("User updated successfully!");
+      } else {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_HOST}/user/create`,
+          // formData,
+          payload,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        toast.success("User added successfully!");
+      }
+
+      // Refetch users
+      const updatedUsers = await axios.get(
+        // `${process.env.NEXT_PUBLIC_HOST}/admin/user/all`,
+        `${process.env.NEXT_PUBLIC_HOST}/user/all`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUsers(updatedUsers.data.data);
+      setCurrentPage(1)
+
+      // Close modal and reset form
+      setIsModalOpen(false);
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        phone: "",
+      });
+    } catch (error: any) {
+      console.error("Error adding/editing user:", error);
+
+      const errorMessage =
+        error?.response?.data?.message || "An unexpected error occurred.";
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="p-8 w-full bg-gray-100 text-gray-800">
@@ -236,12 +349,12 @@ function UserManagement() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-2xl font-semibold">User Management</h1>
-        <button
+        {/* <button
           className="bg-[#191919] text-white px-6 py-3 rounded-lg mt-4 sm:mt-0"
           onClick={() => openModal()}
         >
           Add New User
-        </button>
+        </button> */}
       </div>
 
       <div className="bg-white p-4 md:p-6 rounded-lg shadow-md mb-8 border">
@@ -299,6 +412,9 @@ function UserManagement() {
               <th className="p-4">User Name</th>
               <th className="p-4">Email</th>
               <th className="p-4">Phone</th>
+              <th className="p-4">Country</th>
+              <th className="p-4">City</th>
+              <th className="p-4">Address</th>
               <th className="p-4">Actions</th>
             </tr>
           </thead>
@@ -315,14 +431,18 @@ function UserManagement() {
                 <td className="p-4">{user.name}</td>
                 <td className="p-4">{user.email}</td>
                 <td className="p-4">{user.phone}</td>
+                <td className="p-4">{user.country}</td>
+                <td className="p-4">{user.city}</td>
+                <td className="p-4">{user.address}</td>
                 <td className="p-4">
                   <div className="flex flex-wrap gap-2">
-                    <button
+                    {/* <button
                       className="bg-blue-500 text-white px-6 py-2 rounded-lg"
+                      // onClick={() => openModal(user)}
                       onClick={() => openModal(user)}
                     >
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       className="bg-red-500 text-white px-4 py-2 rounded-lg"
                       onClick={() => openDeleteModal(user.id)}
@@ -492,6 +612,7 @@ function UserManagement() {
                     <p className="text-red-500 text-sm">{errors.email}</p>
                   )}
                 </div>
+
               </div>
 
               {!isEditMode && (
@@ -595,28 +716,6 @@ function UserManagement() {
                   )}
                 </div>
               </div>
-
-              {/* <div>
-                <label className="block text-black font-medium mb-1">
-                  Role
-                </label>
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                  className={`w-full border ${
-                    errors.role ? "border-red-500" : "border-gray-300"
-                  } p-2 rounded-lg`}
-                >
-                  <option value="" selected disabled hidden>
-                    Select Role
-                  </option>
-                  <option value="Admin">Admin</option>
-                </select>
-                {errors.role && (
-                  <p className="text-red-500 text-sm">{errors.role}</p>
-                )}
-              </div> */}
 
               <div className="flex justify-end space-x-4">
                 <button

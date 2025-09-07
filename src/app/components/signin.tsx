@@ -9,7 +9,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 
 function Signin() {
-  const { setToken } = useAuth();
+  const { setToken, setRole } = useAuth();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -62,6 +62,8 @@ function Signin() {
       );
 
       if (response.data.token) {
+        setRole(response.data.data.role);
+        localStorage.setItem("role", response.data.data.role);
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
 
