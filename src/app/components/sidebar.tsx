@@ -107,7 +107,7 @@ function Sidebar({ isOpen, onToggle }) {
         >
           <Image
             src="/images/Product.svg"
-            alt="Doctor Management Icon"
+            alt="Product Management Icon"
             width={20}
             height={20}
           />
@@ -119,7 +119,24 @@ function Sidebar({ isOpen, onToggle }) {
         {/* {(role === "Admin") && ( */}
         {(role === "admin") && (
         <>
-          <hr className="border-gray-700" />
+          <a
+            href="/orderManagement"
+            className={`flex items-center space-x-2 py-2 px-4 rounded-md ${
+              pathname === "/orderManagement"
+                ? "bg-blue-600"
+                : "hover:bg-gray-700"
+            }`}
+          >
+            <Image
+              src="/images/Product.svg"
+              alt="Order Management Icon"
+              width={20}
+              height={20}
+            />
+            <span className="text-base md:text-sm">Order Management</span>
+          </a>
+
+          <hr className="border-gray-700 pt-1" />
           <a
             href="/userManagement"
             className={`flex items-center space-x-2 py-2 px-4 rounded-md ${
