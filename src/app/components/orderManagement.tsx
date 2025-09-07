@@ -49,7 +49,7 @@ interface Artist {
   name: string;
 }
 
-function ProductManagement() {
+function OrderManagement() {
   const [products, setProducts] = useState<Product[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -919,4 +919,4 @@ function ProductManagement() {
   );
 }
 
-export default ProductManagement;
+export default OrderManagement;
