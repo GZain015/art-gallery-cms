@@ -57,7 +57,8 @@ function Sidebar({ isOpen, onToggle }) {
 
   return (
     <div
-      style={{ backgroundColor: "#09243C" }}
+      // style={{ backgroundColor: "#09243C" }}
+      style={{ backgroundColor: "#008994" }}
       className={`fixed top-0 left-0 h-screen flex flex-col text-white z-40 transition-transform duration-300 ease-in-out ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } md:relative md:translate-x-0 md:w-64`}
@@ -72,14 +73,14 @@ function Sidebar({ isOpen, onToggle }) {
         </button>
       )}
       {/* Logo Section */}
-      {/* <div className="flex items-center justify-center h-20 border-b border-gray-700">
+      <div className="flex items-center justify-center h-20 border-b border-gray-700">
         <Image
             src="/images/LogoSidebar1.png"
             alt="Dashboard Icon"
             width={150}
             height={150}
         />
-      </div> */}
+      </div>
 
       {/* Navigation Items */}
       <nav className="flex flex-col flex-grow p-4 space-y-4">
