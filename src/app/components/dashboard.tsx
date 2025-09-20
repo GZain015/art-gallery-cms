@@ -243,9 +243,9 @@ function Dashboard() {
             <CardTitle className="text-lg font-semibold">Total Revenue</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* <p className="text-3xl font-bold text-purple-600">${stats.totalRevenue.toFixed(2)}</p> */}
+            <p className="text-3xl font-bold text-purple-600">${stats.totalRevenue.toFixed(2)}</p>
             {/* <p className="text-3xl font-bold text-purple-600">Rs. {" "} {stats.totalRevenue.toFixed(2)}</p> */}
-            <p className="text-3xl font-bold text-purple-600">PKR. {" "} {stats.totalRevenue.toFixed(2)}</p>
+            {/* <p className="text-3xl font-bold text-purple-600">PKR. {" "} {stats.totalRevenue.toFixed(2)}</p> */}
             <p className="text-sm text-gray-500">Total earnings</p>
           </CardContent>
         </Card>
@@ -272,9 +272,10 @@ function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
+                <Tooltip formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Earnings']} />
                 {/* <Tooltip formatter={(value) => [`$${value}`, 'Earnings']} /> */}
                 {/* <Tooltip formatter={(value) => [`Rs. ${Number(value).toFixed(2)}`, 'Earnings']} /> */}
-                <Tooltip formatter={(value) => [`PKR. ${Number(value).toFixed(2)}`, 'Earnings']} />
+                {/* <Tooltip formatter={(value) => [`PKR. ${Number(value).toFixed(2)}`, 'Earnings']} /> */}
                 <Bar dataKey="earnings" fill="#4F46E5" />
               </BarChart>
             </ResponsiveContainer>
@@ -327,9 +328,9 @@ function Dashboard() {
                 <tr key={order.id} className="border-b hover:bg-gray-50">
                   <td className="py-2 px-4 font-mono text-xs">{order.id.slice(0, 8)}...</td>
                   <td className="py-2 px-4">{order.user?.name}</td>
-                  {/* <td className="py-2 px-4 font-medium">${parseFloat(order.totalAmount).toFixed(2)}</td> */}
+                  <td className="py-2 px-4 font-medium">${parseFloat(order.totalAmount).toFixed(2)}</td>
                   {/* <td className="py-2 px-4 font-medium">Rs. {parseFloat(order.totalAmount).toFixed(2)}</td> */}
-                  <td className="py-2 px-4 font-medium">PKR {parseFloat(order.totalAmount).toFixed(2)}</td>
+                  {/* <td className="py-2 px-4 font-medium">PKR {parseFloat(order.totalAmount).toFixed(2)}</td> */}
                   <td className="py-2 px-4">
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       order.status === 'delivered' ? 'bg-green-100 text-green-800' :
