@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import "react-phone-input-2/lib/style.css";
 
-import AWS from 'aws-sdk'; 
+// import AWS from 'aws-sdk'; // Commented out: moving away from S3 uploads 
 
 interface FormErrors {
   email?: string;
@@ -241,29 +241,38 @@ function Userprofile() {
       setImageUrl(url);
     }
   };
+
+  // const uploadToS3 = async (file: never) => {
+  //   const s3 = new AWS.S3({
+  //     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
+  //     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY,
+  //     region: process.env.NEXT_PUBLIC_AWS_REGION,
+  //   });
+  //   const params = {
+  //     Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET,
+  //     Key: `upload/${Date.now()}-${file.name}`,
+  //     Body: file,
+  //   };
   
-
-
-  const uploadToS3 = async (file: never) => {
-    const s3 = new AWS.S3({
-      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
-      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY,
-      region: process.env.NEXT_PUBLIC_AWS_REGION,
+  //   try {
+  //     const data = await s3.upload(params).promise();
+  //     console.log("File uploaded to S3: ", data.Location);
+  //     return data.Location;
+  //   } catch (error) {
+  //     console.error("Error uploading file to S3:", error);
+  //     throw new Error("Error uploading file to S3");
+  //   }
+  // };
+  
+ 
+  // Base64 conversion (replacing S3 upload)
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
-    const params = {
-      Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET,
-      Key: `upload/${Date.now()}-${file.name}`,
-      Body: file,
-    };
-  
-    try {
-      const data = await s3.upload(params).promise();
-      console.log("File uploaded to S3: ", data.Location);
-      return data.Location;
-    } catch (error) {
-      console.error("Error uploading file to S3:", error);
-      throw new Error("Error uploading file to S3");
-    }
   };
   
   const handleImageSubmit = async (e: { preventDefault: () => void; }) => {
@@ -275,23 +284,29 @@ function Userprofile() {
     }
   
     try {
-      const imageUrl = await uploadToS3(selectedFile);
-      setImageUrl(imageUrl);
-      // console.log("Image uploaded successfully: ", imageUrl);
+      // const imageUrl = await uploadToS3(selectedFile);
+      // setImageUrl(imageUrl);
+      // // console.log("Image uploaded successfully: ", imageUrl);
+      const base64DataUrl = await fileToBase64(selectedFile as File);
+      setImageUrl(base64DataUrl);
+      // console.log("Image converted to base64 successfully: ", base64DataUrl);
   
       // Update formData with the new profile image URL directly
       setFormData((prevFormData) => ({
         ...prevFormData,
-        profilePic: imageUrl, // Use the image URL here
+        // profilePic: imageUrl, // Use the image URL here
+        profilePic: base64DataUrl, // Store base64 string
       }));
   
       // Log updated formData after the update is applied
-      console.log("Updated FormData: ", { ...formData, profilePic: imageUrl });
+      // console.log("Updated FormData: ", { ...formData, profilePic: imageUrl });
+      console.log("Updated FormData: ", { ...formData, profilePic: base64DataUrl });
 
       try {
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_HOST}/admin/user/`,
-          { ...formData, profilePic: imageUrl },
+          // { ...formData, profilePic: imageUrl },
+          { ...formData, profilePic: base64DataUrl },
           {
             headers: {
               Authorization: `Bearer ${token}`,

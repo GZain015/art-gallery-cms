@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import ConfirmModal from "./modaldeleteadmin";
 import { useDebounce } from "use-debounce";
 import Image from "next/image";
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk"; // Commented out: moving away from S3 uploads
 
 interface FormErrors {
   title?: string;
@@ -373,28 +373,38 @@ function ProductManagement() {
     }
   };
 
-  // S3 Upload
-  const uploadToS3 = async (file: File) => {
-    const s3 = new AWS.S3({
-      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
-      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY,
-      region: process.env.NEXT_PUBLIC_AWS_REGION,
+  // Base64 conversion (replacing S3 upload)
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
-
-    const params = {
-      Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET as string,
-      Key: `upload/products/${Date.now()}-${file.name}`,
-      Body: file,
-    };
-
-    try {
-      const data = await s3.upload(params).promise();
-      return data.Location as string;
-    } catch (error) {
-      console.error("Error uploading file to S3:", error);
-      throw new Error("Error uploading file to S3");
-    }
   };
+
+  // // S3 Upload
+  // const uploadToS3 = async (file: File) => {
+  //   const s3 = new AWS.S3({
+  //     accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY,
+  //     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_KEY,
+  //     region: process.env.NEXT_PUBLIC_AWS_REGION,
+  //   });
+
+  //   const params = {
+  //     Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET as string,
+  //     Key: `upload/products/${Date.now()}-${file.name}`,
+  //     Body: file,
+  //   };
+
+  //   try {
+  //     const data = await s3.upload(params).promise();
+  //     return data.Location as string;
+  //   } catch (error) {
+  //     console.error("Error uploading file to S3:", error);
+  //     throw new Error("Error uploading file to S3");
+  //   }
+  // };
 
   // Image upload handling
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -415,11 +425,14 @@ function ProductManagement() {
 
     try {
       setUploadingImage(true);
-      const uploadedUrl = await uploadToS3(selectedFile);
-      setImagePreviewUrl(uploadedUrl);
+      // const uploadedUrl = await uploadToS3(selectedFile);
+      // setImagePreviewUrl(uploadedUrl);
+      const base64DataUrl = await fileToBase64(selectedFile);
+      setImagePreviewUrl(base64DataUrl);
       setFormData((prev) => ({
         ...prev,
-        image: uploadedUrl,
+        // image: uploadedUrl,
+        image: base64DataUrl,
       }));
       toast.success("Image uploaded successfully");
       setIsModalImageOpen(false);
