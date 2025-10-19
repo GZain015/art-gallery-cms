@@ -553,7 +553,8 @@ function ProductManagement() {
                 <td className="p-4">{product.createdBy?.name || "Unknown Artist"}</td>
                 <td className="p-4">{product.category}</td>
                 <td className="p-4">{product.medium}</td>
-                <td className="p-4">PKR {Number(product.price || 0).toLocaleString()}</td>
+                {/* <td className="p-4">PKR {Number(product.price || 0).toLocaleString()}</td> */}
+                <td className="p-4">${Number(product.price || 0).toLocaleString()}</td>
                 <td className="p-4">{product.stock}</td>
                 <td className="p-4">
                   <span className="inline-block px-3 py-1 bg-gray-200 text-sm rounded-lg">
@@ -781,7 +782,7 @@ function ProductManagement() {
                     name="sku"
                     value={formData.sku}
                     onChange={handleChange}
-                    placeholder="Optional"
+                    placeholder="Category-1"
                     className="w-full border border-gray-300 p-2 rounded-lg"
                   />
                 </div>
@@ -790,7 +791,8 @@ function ProductManagement() {
               {/* Pricing & Inventory */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="md:col-span-1">
-                  <label className="block text-black font-medium mb-1">Price (PKR)*</label>
+                  {/* <label className="block text-black font-medium mb-1">Price (PKR)*</label> */}
+                  <label className="block text-black font-medium mb-1">Price ($)*</label>
                   <input
                     type="number"
                     name="price"
